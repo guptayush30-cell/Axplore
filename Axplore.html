@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <title>AXPLORE</title>
+  <style>
+    :root {
+      --bg: #120506;
+      --bg-2: #1b0708;
+      --panel: #22090b;
+      --panel-2: #2d0c0f;
+      --text: #fff1f1;
+      --muted: #d9a9a9;
+      --primary: #b3132a;
+      --primary-2: #7f0918;
+      --accent: #f2c14e;
+      --accent-2: #ffd98a;
+      --line: rgba(242, 193, 78, 0.18);
+      --shadow: 0 18px 60px rgba(0,0,0,0.42);
+      --radius: 24px;
+    }body {
+  font-family: 'Kalam', cursive;
+}
+
+h1, h2, .chapter-head h2 {
+  font-family: 'Patrick Hand', cursive;
+  letter-spacing: 1px;
+}
+
+p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.85;
+      background:
+        radial-gradient(circle at top, rgba(179,19,42,0.14), transparent 26%),
+        linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%);
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px 14px 70px;
+    }
+
+    .hero {
+      background: linear-gradient(145deg, rgba(179,19,42,0.24), rgba(32,9,11,0.98));
+      border: 1px solid rgba(242, 193, 78, 0.18);
+      border-radius: 30px;
+      padding: 34px 26px 28px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(242,193,78,0.16), transparent 62%);
+    }
+
+    .hero::before { width: 320px; height: 320px; top: -120px; right: -110px; }
+    .hero::after { width: 220px; height: 220px; bottom: -90px; left: -70px; }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(242, 193, 78, 0.24);
+      color: var(--accent-2);
+      background: rgba(0,0,0,0.18);
+      font-size: 0.82rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2.5rem, 6vw, 4.8rem);
+      line-height: 0.98;
+      letter-spacing: 0.04em;
+    }
+
+    .subtitle {
+      max-width: 860px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .meta {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 20px;
+    }
+
+    .meta-card, .card, .chapter, .visual {
+      background: linear-gradient(180deg, rgba(37,10,12,0.98), rgba(24,7,8,0.98));
+      border: 1px solid rgba(242,193,78,0.12);
+      box-shadow: var(--shadow);
+    }
+
+    .meta-card {
+      border-radius: 18px;
+      padding: 14px 16px;
+    }
+
+    .label {
+      display: block;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      margin-bottom: 6px;
+    }
+
+    .value { color: var(--text); font-size: 0.98rem; }
+
+    .nav {
+      position: sticky;
+      top: 10px;
+      z-index: 10;
+      margin: 16px 0 22px;
+      padding: 12px;
+      border-radius: 20px;
+      background: rgba(18,5,6,0.84);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(242,193,78,0.14);
+      box-shadow: 0 10px 35px rgba(0,0,0,0.3);
+    }
+
+    .nav-inner {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(242,193,78,0.14);
+      background: rgba(179,19,42,0.15);
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      font-size: 0.95rem;
+    }
+
+    .nav a:hover {
+      transform: translateY(-1px);
+      background: rgba(179,19,42,0.34);
+      border-color: rgba(242,193,78,0.28);
+    }
+
+    .story {
+      display: grid;
+      gap: 18px;
+    }
+
+    .chapter {
+      border-radius: 28px;
+      padding: 28px 24px;
+    }
+
+    .chapter-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 12px;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(242,193,78,0.15);
+    }
+
+    .chapter-head .num {
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .chapter-head h2 {
+      margin: 0;
+      font-size: 1.7rem;
+      color: #fff4f4;
+    }
+
+    p {
+      margin: 0 0 14px;
+      font-size: 1.03rem;
+      color: var(--text);
+    }
+
+    .lead {
+      font-size: 1.08rem;
+      color: #ffecec;
+    }
+
+    .quote {
+      margin: 18px 0;
+      padding: 16px 18px;
+      border-left: 4px solid var(--accent);
+      border-radius: 0 16px 16px 0;
+      background: rgba(242,193,78,0.06);
+      color: #ffe6b0;
+      font-style: italic;
+    }
+
+    .visual {
+      border-radius: 26px;
+      padding: 16px;
+      margin: 8px 0 4px;
+    }
+
+    .visual-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.9fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .visual figure {
+      margin: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(242,193,78,0.12);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .visual img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .visual figcaption {
+      padding: 12px 14px 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      background: rgba(0,0,0,0.16);
+    }
+
+    .stack { display: grid; gap: 16px; }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .chip {
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(242,193,78,0.16);
+      background: rgba(255,255,255,0.03);
+      color: var(--accent-2);
+      font-size: 0.85rem;
+    }
+
+    .ending {
+      text-align: center;
+      color: var(--accent-2);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+
+    .note {
+      margin-top: 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+/* ===== MOBILE FIRST IMPROVEMENTS ===== */
+
+@media (max-width: 768px) {
+
+  body {
+    font-size: 15px;
+  }
+
+  .wrap {
+    padding: 12px;
+  }
+
+  /* Hero Section */
+  .hero {
+    padding: 20px 14px;
+    border-radius: 20px;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  /* Navbar */
+  .nav {
+    padding: 10px;
+    top: 5px;
+  }
+
+  .nav-inner {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+
+  .nav a {
+    flex: 0 0 auto;
+    font-size: 0.85rem;
+    padding: 8px 12px;
+  }
+
+  /* Chapters */
+  .chapter {
+    padding: 18px 14px;
+    border-radius: 20px;
+  }
+
+  .chapter-head h2 {
+    font-size: 1.3rem;
+  }
+
+  .chapter-head .num {
+    font-size: 0.7rem;
+  }
+
+  /* Visual Sections */
+  .visual-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .visual img {
+    height: auto;
+  }
+
+  /* Meta Cards */
+  .meta {
+    grid-template-columns: 1fr;
+  }
+
+  /* Chips */
+  .chips {
+    justify-content: center;
+  }
+
+  .chip {
+    font-size: 0.75rem;
+  }
+
+}
+
+
+/* ===== EXTRA SMALL DEVICES ===== */
+
+@media (max-width: 480px) {
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .chapter-head h2 {
+    font-size: 1.1rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+  }
+
+  .nav a {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+}
+    @media (max-width: 860px) {
+      .meta { grid-template-columns: 1fr; }
+      .visual-grid { grid-template-columns: 1fr; }
+      .chapter { padding: 22px 16px; }
+      .hero { padding: 26px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero" id="top">
+      <div class="eyebrow">Axplore • Hinglish Novel Draft</div>
+      <h1>AXPLORE</h1>
+      <p class="subtitle">
+        Ek mystery-adventure story jahan Ayush ki curiosity, Sonal mam ki guidance, aur tunnel ke andar chhupa hua raaz milkar ek psychological exploration ban jaata hai.
+        Yahan dream future prediction nahi hai — dream memory aur pattern ka strong version hai.
+      </p>
+      <div class="meta">
+        <div class="meta-card">
+          <span class="label">Genre</span>
+          <span class="value">Mystery, Psychological, Adventure</span>
+        </div>
+        <div class="meta-card">
+          <span class="label">Theme</span>
+          <span class="value">Exploration, mentor-student bond, memory, and instinct</span>
+        </div>
+        <div class="meta-card">
+          <span class="label">Tone</span>
+          <span class="value">Cinematic, emotional, and suspenseful</span>
+        </div>
+      </div>
+      <div class="chips">
+        <span class="chip">Ayush</span>
+        <span class="chip">Sonal Mam</span>
+        <span class="chip">Aru</span>
+        <span class="chip">Tunnel</span>
+        <span class="chip">Dream Memory</span>
+        <span class="chip">Archaeology</span>
+      </div>
+    </section>
+
+    <nav class="nav" aria-label="Chapter navigation">
+      <div class="nav-inner">
+        <a href="#chapter1">Chapter 1</a>
+        <a href="#chapter2">Chapter 2</a>
+        <a href="#chapter3">Chapter 3</a>
+        <a href="#chapter4">Chapter 4</a>
+        <a href="#chapter5">Chapter 5</a>
+        <a href="#ending">Ending</a>
+      </div>
+    </nav>
+
+    <section class="story">
+      <article class="chapter" id="chapter1">
+        <div class="chapter-head">
+          <span class="num">Chapter 1</span>
+          <h2>Tunnel Ka Pehla Raaz</h2>
+        </div>
+        <p class="lead">
+          Shaam ka time tha. Department of Archaeology ki team ek purani site par investigation ke liye pahunchi.
+          Zameen sookhi thi, hawa mein purane waqt ki smell thi, aur sab kuch aisa lag raha tha jaise history khud unka wait kar rahi ho.
+        </p>
+        <p>
+          Investigation ke dauran unhe ek 120-foot lambi surang mili. Surang dheere-dheere andhere mein ghulti ja rahi thi.
+          Team se teen members andar bheje gaye: Ayush, jo intern tha aur har cheez ko samajhna chahta tha; Sonal mam, jo senior archaeologist thi aur kaafi strict thi; aur Ram, helper, jo tools aur support ke liye saath tha.
+        </p>
+        <p>
+          Sonal mam ne Ayush ko tasks diye aur uske kaam ko carefully guide karna shuru kiya.
+          Ayush thoda slow tha, lekin usme curiosity thi. Sonal ki strictness me ek discipline tha, aur Ayush ki learning me ek raw excitement.
+          Dono ke beech professional baat cheet hoti rahi, aur dheere-dheere ek mentor-student bond banne laga.
+        </p>
+        <p>
+          Thodi der baad unhe ek skeleton mila. Us moment ne tunnel ka mood badal diya.
+          Ab ye sirf excavation nahi tha; ye ek aise past ko touch karna tha jo kabhi zinda tha.
+        </p>
+        <p>
+          Baad mein Sonal mam ne Ayush se college aur archaeology ke interest ke baare mein baat ki.
+          Ayush ne bataya ki uske papa kehte hain sab kuch explore karna chahiye aur jo achha lage use life mein implement karna chahiye.
+          Sonal ko uski baat genuine lagi. Phir achanak helper Ram ki chillaahat sunai di, aur tunnel ke andar bats aur chhote jaanwar bahar nikalne lage.
+        </p>
+        <p>
+          Team alert ho gayi aur safety precautions use karke jaldi bahar nikal aayi.
+          Tunnel ka sirf ek chhota hissa hi explore hua tha, lekin us ek hissay ne Ayush ke mind mein ek permanent mark chhod diya.
+        </p>
+      </article>
+
+      <section class="visual" aria-label="Ayush and Sonal working scene">
+        <div class="visual-grid">
+          <figure>
+            <img alt="Ayush aur Sonal saath me tunnel work karte hue" src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?>
+              <svg xmlns='http://www.w3.org/2000/svg' width='1200' height='720' viewBox='0 0 1200 720'>
+                <defs>
+                  <linearGradient id='g1' x1='0' y1='0' x2='0' y2='1'>
+                    <stop offset='0%' stop-color='%23110a0b'/>
+                    <stop offset='100%' stop-color='%23311214'/>
+                  </linearGradient>
+                  <linearGradient id='g2' x1='0' y1='0' x2='1' y2='1'>
+                    <stop offset='0%' stop-color='%23b3132a'/>
+                    <stop offset='100%' stop-color='%237f0918'/>
+                  </linearGradient>
+                </defs>
+                <rect width='1200' height='720' fill='url(%23g1)'/>
+                <ellipse cx='600' cy='360' rx='420' ry='220' fill='%231f0a0c' opacity='0.9'/>
+                <path d='M130 550 C260 440, 390 405, 600 390 C810 375, 940 415, 1070 520' stroke='%23f2c14e' stroke-width='10' fill='none' opacity='0.5'/>
+                <circle cx='475' cy='320' r='58' fill='%23ffd98a'/>
+                <circle cx='720' cy='300' r='60' fill='%23ffd98a'/>
+                <rect x='430' y='380' width='120' height='200' rx='44' fill='url(%23g2)'/>
+                <rect x='675' y='360' width='130' height='220' rx='44' fill='%23f2c14e' opacity='0.86'/>
+                <rect x='485' y='560' width='38' height='110' rx='18' fill='%238d2b36'/>
+                <rect x='725' y='570' width='38' height='100' rx='18' fill='%238d2b36'/>
+                <rect x='365' y='450' width='170' height='26' rx='13' fill='%23f2c14e' opacity='0.7'/>
+                <rect x='760' y='445' width='170' height='26' rx='13' fill='%23f2c14e' opacity='0.7'/>
+                <circle cx='600' cy='140' r='86' fill='%23f2c14e' opacity='0.18'/>
+                <text x='600' y='655' text-anchor='middle' font-family='Georgia' font-size='30' fill='%23ffd98a'>Ayush aur Sonal mam tunnel me kaam karte hue</text>
+              </svg>"></img>
+            <figcaption>Ayush aur Sonal mam ka working moment — strict guidance aur curious learning ka balanced scene.</figcaption>
+          </figure>
+          <figure>
+            <img alt="Tunnel atmosphere with archaeology tools" src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?>
+              <svg xmlns='http://www.w3.org/2000/svg' width='900' height='720' viewBox='0 0 900 720'>
+                <defs>
+                  <radialGradient id='r1' cx='50%' cy='35%' r='65%'>
+                    <stop offset='0%' stop-color='%23f2c14e' stop-opacity='0.28'/>
+                    <stop offset='100%' stop-color='%23120809' stop-opacity='0'/>
+                  </radialGradient>
+                </defs>
+                <rect width='900' height='720' fill='%23110506'/>
+                <ellipse cx='450' cy='330' rx='300' ry='190' fill='%23230a0d'/>
+                <ellipse cx='450' cy='330' rx='250' ry='150' fill='url(%23r1)'/>
+                <rect x='350' y='350' width='120' height='170' rx='24' fill='%23b3132a'/>
+                <rect x='490' y='330' width='130' height='190' rx='24' fill='%23f2c14e' opacity='0.85'/>
+                <rect x='260' y='500' width='380' height='28' rx='14' fill='%23f2c14e' opacity='0.35'/>
+                <circle cx='350' cy='265' r='44' fill='%23ffd98a'/>
+                <circle cx='545' cy='240' r='46' fill='%23ffd98a'/>
+                <path d='M200 600 L700 600' stroke='%23f2c14e' stroke-width='10' opacity='0.55'/>
+                <text x='450' y='660' text-anchor='middle' font-family='Georgia' font-size='28' fill='%23ffd98a'>Purani surang aur archaeology ka raaz</text>
+              </svg>">
+            </img>
+            <figcaption>Tunnel ka mood — dark, old, aur suspense se bhara hua.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <article class="chapter" id="chapter2">
+        <div class="chapter-head">
+          <span class="num">Chapter 2</span>
+          <h2>Dream Jo Rukta Nahi</h2>
+        </div>
+        <p class="lead">
+          Ghar aakar Ayush ne father ko sab kuch bataya. Raat hui, aur jab wo so gaya to tunnel dobara uske mind mein aa gaya.
+        </p>
+        <p>
+          Is baar dream normal nahi tha. Ye future ka scene nahi tha. Ye tunnel ki memory ka continuation tha.
+          Jaise koi file adhoori reh gayi ho aur sleep ke andar uski next line khul rahi ho.
+          Ayush ko lagta tha ki jo wo dekh raha hai, wo prediction jaisa hai, lekin actually wo uske brain ka strong pattern-reading version tha.
+        </p>
+        <p>
+          Dream mein Sonal mam ki baatein aur tunnel ke scenes aur zyada clear ho gaye.
+          Archaeology, purani cheezein, aur history ke andar chhupi feeling — sab Ayush ke mind mein ek nayi jagah bana rahe the.
+        </p>
+        <p>
+          Subah uthkar Ayush confused tha. Uske room mein laptop, photographs, aur uski website Axplore thi.
+          Us website me uske blogs aur different experiences the.
+          Wo mountains ko bhi pasand karta tha aur naye cheezein try karna uske nature ka part tha.
+        </p>
+      </article>
+
+      <article class="chapter" id="chapter3">
+        <div class="chapter-head">
+          <span class="num">Chapter 3</span>
+          <h2>Sonal Mam Ka Ghar aur The Draft</h2>
+        </div>
+        <p class="lead">
+          Ayush answer dhoondhne Sonal mam ke ghar pahunch gaya.
+          Doorbell baji. Sonal ne door khola aur Ayush ko dekhkar surprise bhi hui aur thodi strict bhi.
+        </p>
+        <p>
+          Wo casual kapdon mein thi, ek simple shirt aur half pant pehne hue, aur haath mein uski notebook thi jisme wo apni book <strong>Before Your Birth</strong> ka draft likh rahi thi.
+          Ayush ne kaha ki usse kuch puchna hai, lekin Sonal ne pehle kal aane ko bola.
+        </p>
+        <p>
+          Ayush ne bataya ki problem dobara ho rahi hai — ye teesri baar tha.
+          Sun kar Sonal ne use andar bula liya. Uska ghar ek archaeology museum jaisa lag raha tha.
+          Ek almari par likha tha <strong>The Draft</strong>.
+        </p>
+        <p>
+          Sonal ne chai banane ke liye kitchen ka rukh kiya.
+          Curiosity mein Ayush ne cupboard khola aur ek book padhne laga.
+          Sonal wapas aayi to uski nazar seedha Ayush par gayi. Ayush turant samajh gaya ki usne galti kar di hai aur book wapas rakh di.
+        </p>
+        <p>
+          Chai ke saath Ayush ne sab kuch bata diya — dream continue hota hai, scenes match hote hain, aur kabhi kabhi reality se thoda alag bhi.
+          Sonal ko yeh sun kar hairani hui ki archaeology mein Ayush ka interest uske apne interest se kaafi milta-julta hai.
+        </p>
+        <p>
+          Sonal ne socha ki agar sab kuch tunnel ke baad se start hua hai, to source bhi tunnel hi hoga.
+          Isliye usne team ki member Aru ko bulaya aur footage nikalvaya.
+        </p>
+      </article>
+
+      <section class="visual" aria-label="Ayush Sonal Aru scene">
+        <div class="visual-grid">
+          <figure>
+            <img alt="Ayush, Sonal mam aur Aru saath me" src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?>
+              <svg xmlns='http://www.w3.org/2000/svg' width='1200' height='720' viewBox='0 0 1200 720'>
+                <defs>
+                  <linearGradient id='bg' x1='0' y1='0' x2='1' y2='1'>
+                    <stop offset='0%' stop-color='%23110a0b'/>
+                    <stop offset='100%' stop-color='%23341418'/>
+                  </linearGradient>
+                  <linearGradient id='light' x1='0' y1='0' x2='0' y2='1'>
+                    <stop offset='0%' stop-color='%23ffd98a' stop-opacity='0.45'/>
+                    <stop offset='100%' stop-color='%23ffd98a' stop-opacity='0'/>
+                  </linearGradient>
+                </defs>
+                <rect width='1200' height='720' fill='url(%23bg)'/>
+                <ellipse cx='600' cy='340' rx='410' ry='230' fill='%23220a0d'/>
+                <ellipse cx='600' cy='300' rx='290' ry='150' fill='url(%23light)'/>
+                <circle cx='420' cy='290' r='58' fill='%23ffd98a'/>
+                <circle cx='600' cy='255' r='62' fill='%23ffd98a'/>
+                <circle cx='780' cy='290' r='58' fill='%23ffd98a'/>
+                <rect x='360' y='350' width='120' height='210' rx='44' fill='%23f2c14e' opacity='0.9'/>
+                <rect x='540' y='320' width='120' height='240' rx='44' fill='%23b3132a'/>
+                <rect x='720' y='350' width='120' height='210' rx='44' fill='%23f2c14e' opacity='0.9'/>
+                <rect x='400' y='570' width='30' height='95' rx='14' fill='%238d2b36'/>
+                <rect x='580' y='595' width='30' height='70' rx='14' fill='%238d2b36'/>
+                <rect x='760' y='570' width='30' height='95' rx='14' fill='%238d2b36'/>
+                <text x='600' y='660' text-anchor='middle' font-family='Georgia' font-size='30' fill='%23ffd98a'>Ayush, Sonal mam aur Aru ek sath</text>
+              </svg>"></img>
+            <figcaption>Ayush, Sonal mam aur Aru ka combined scene — teamwork, tension aur curiosity ek frame mein.</figcaption>
+          </figure>
+          <figure>
+            <img alt="Aru recording karte hue" src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?>
+              <svg xmlns='http://www.w3.org/2000/svg' width='900' height='720' viewBox='0 0 900 720'>
+                <rect width='900' height='720' fill='%23110506'/>
+                <circle cx='450' cy='260' r='250' fill='%23250a0c'/>
+                <circle cx='450' cy='260' r='160' fill='%23b3132a' opacity='0.24'/>
+                <rect x='315' y='355' width='270' height='130' rx='28' fill='%23f2c14e' opacity='0.86'/>
+                <circle cx='450' cy='275' r='55' fill='%23ffd98a'/>
+                <rect x='420' y='500' width='60' height='120' rx='20' fill='%238d2b36'/>
+                <rect x='305' y='250' width='110' height='18' rx='9' fill='%23ffd98a'/>
+                <rect x='475' y='250' width='110' height='18' rx='9' fill='%23ffd98a'/>
+                <text x='450' y='660' text-anchor='middle' font-family='Georgia' font-size='28' fill='%23ffd98a'>Recording aur observation ka moment</text>
+              </svg>">
+            </img>
+            <figcaption>Aru ka recording perspective — footage, observation, aur evidence ka part.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <article class="chapter" id="chapter4">
+        <div class="chapter-head">
+          <span class="num">Chapter 4</span>
+          <h2>Andar Ka Pattern</h2>
+        </div>
+        <p class="lead">
+          Footage dekhte hue team ko pata chala ki outside recording to thi, but tunnel ke andar ka proper video nahi tha.
+          Sonal is baat se irritate ho gayi.
+        </p>
+        <p>
+          Ayush ne samjhane ki koshish ki, lekin Sonal ki discipline wali side aur strong ho gayi.
+          Phir bhi Ayush ne mana nahi. Usne bola ki unhe surang mein wapas jana hoga.
+          Sonal ne rule yaad dilaya — team ke saath aur permission ke saath hi jaana hota hai.
+        </p>
+        <p>
+          Ayush ne kaha, agar unhe pehle se andaza ho ki andar kya ho sakta hai, to wo better precaution aur tools ke saath ja sakte hain.
+          Sonal ne thoda socha aur phir uski baat maan li.
+        </p>
+        <p>
+          Uske baad Sonal ne Ayush se kaha ki pehle so jao aur phir aage ka dream dekhne ki koshish karo.
+          Ayush ghar jaane laga, par Sonal ne uske sir par halki si tap karke bol diya ki aaj hi jana hoga.
+          Wahi Aru aur Ayush ke beech halka normal conversation hua aur dheere-dheere Ayush ko neend aa gayi.
+        </p>
+        <p>
+          Story ka core yahin aur clear hota hai:
+          Ayush future nahi dekh raha. Uska dream uske brain ki strong memory hai, jisme past scenes ko itni detail se arrange kiya gaya hai ki wo prediction jaisa lagta hai.
+          Kabhi match hota hai, kabhi thoda off hota hai.
+          Bas isi gap se suspense banta hai.
+        </p>
+      </article>
+
+      <article class="chapter" id="chapter5">
+        <div class="chapter-head">
+          <span class="num">Chapter 5</span>
+          <h2>Surang Ka Andar Ka Safar</h2>
+        </div>
+        <p class="lead">
+          Dream mein Ayush ne dekha ki purple rock clean karne ke baad ek zor ki awaaz aati hai.
+          Sonal ne usse ears band karne ko bola. Awaaz kuch der tak tez rahi, phir shaant ho gayi.
+        </p>
+        <p>
+          Teeno jaldi aage badhte hain. Surang mein teen raaste milte hain. Sonal soch kar third option choose karti hai.
+          Aage bahut anokhi purani cheezein milti hain — murtiyan, old papers, aur red, green, aur purple diamonds.
+        </p>
+        <p>
+          Ayush ki nazar green diamond par padti hai. Wo touch karne hi wala hota hai ki dream toot jata hai aur uski neend khul jaati hai.
+          Jab wo reality mein aata hai, to Sonal aur Aru uske saamne hoti hain.
+        </p>
+        <p>
+          Sonal kehti hai ki permission abhi nahi mili hai.
+          Ayush baar-baar request karta hai. Wo jaanta hai ki Sonal team aur protocol ke bina kabhi andar nahi jayegi.
+          Ant mein Sonal usse sirf us jagah tak le jaane ke liye maan jaati hai jahan tak pehle gaye the.
+        </p>
+        <p>
+          Aru ko bhi saath rakha jaata hai, taaki is baar proper recording ho.
+          Ayush jab dream ki baat karta hai to Sonal use ghoor deti hai, lekin waise hi wo teeno phir tunnel mein enter karte hain.
+        </p>
+        <p>
+          Andar jaakar Ayush ek jaanwar dekh leta hai aur Sonal ko bata deta hai.
+          Sonal turant gloves ke baare mein poochti hai aur use warn karti hai ki bite ka effect ho sakta hai.
+          Wo jaanwar ko carefully check karti hai aur bag mein rakh leti hai.
+        </p>
+        <p>
+          Ayush andar aur jaana chahta hai, lekin Sonal mana kar deti hai.
+          Uske aur Ayush ke beech guide aur learner ka tension-filled dialogue hota hai.
+          Ayush apne bag se tools nikalta hai, jise dekh kar Sonal ko samajh aata hai ki wo dream ko lightly nahi le raha.
+          Phir Sonal maan jaati hai.
+        </p>
+        <p>
+          Aage chal kar dream ke hisaab se hi kuch cheezein milti hain, lekin sab kuch exact same nahi hota.
+          Kahin match, kahin difference — yahi story ka logic hai.
+        </p>
+        <p>
+          Doctor baad mein jaanwaron aur Ayush ko check karta hai.
+          Bite ka nishaan body par nahi milta, lekin doctor explain karta hai ki us jaanwar ka organ structure human brain se similar ho sakta hai.
+          Is wajah se bite ne Ayush ki dream memory ko strong kar diya.
+        </p>
+      </article>
+
+      <article class="chapter" id="ending">
+        <div class="chapter-head">
+          <span class="num">Ending</span>
+          <h2>Report, Memory, Aur Andaza</h2>
+        </div>
+        <p class="lead">
+          Final dream mein Ayush hospital mein hota hai. Uske haath mein report aati hai, jisme likha hota hai ki jaanwar ka organ human brain se milta-julta hai.
+        </p>
+        <p>
+          Doctor usse batate hain ki jab wo jaanwar kisi ko bite karta hai, to brain par effect ho sakta hai.
+          Ye effect achha bhi ho sakta hai aur bura bhi. Ayush ke case mein bite ne uske dream memory ko strong kar diya tha.
+        </p>
+        <p>
+          Iska matlab ye nahi tha ki Ayush future dekh raha tha.
+          Asli baat ye thi ki wo past scenes ko itni detail mein process kar raha tha ki uska mind aage ka andaza lagane laga.
+          Kabhi reality us andaze se match kar jaati thi, kabhi thodi alag nikal jaati thi.
+        </p>
+        <p>
+          Phir Ayush ki neend khul jaati hai, aur turant doctor ka call aata hai: report aa gayi hai, hospital aao.
+          Yahin par story end hoti hai — dream aur reality ke beech ek aisa moment, jahan dono ek dusre ko chhoo kar alag ho jaate hain.
+        </p>
+        <div class="quote">
+          Ayush future nahi dekh raha tha. Wo apni memory aur observation se agle step ka andaza laga raha tha.
+        </div>
+        <p class="ending">The End</p>
+      </article>
+    </section>
+
+    <p class="note">Ye version Hinglish novel format mein likha gaya hai, chapter navigation aur mid-story visual cards ke saath.</p>
+  </main>
+</body>
+</html>
